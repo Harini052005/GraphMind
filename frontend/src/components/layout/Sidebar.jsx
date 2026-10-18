@@ -69,9 +69,11 @@ export default function Sidebar({
       {/* Brand Header */}
       <div>
         <div className="p-5 border-b border-[#E8E2D8] flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-[#1C1C1C] flex items-center justify-center text-white font-bold text-base shadow-xs">
-            <span className="text-[#98D8B0]">G</span>M
-          </div>
+          <img
+            src="/logo.jpeg"
+            alt="GraphMind Logo"
+            className="w-9 h-9 rounded-xl object-cover border border-[#E8E2D8] shadow-xs shrink-0"
+          />
           <div>
             <h1 className="text-sm font-bold text-[#1C1C1C] leading-none tracking-tight">
               GraphMind

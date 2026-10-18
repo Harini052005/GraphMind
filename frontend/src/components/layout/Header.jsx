@@ -21,6 +21,11 @@ export default function Header({
     <header className="h-16 px-6 bg-white border-b border-[#E8E2D8] flex items-center justify-between shrink-0 shadow-2xs select-none">
       {/* Left: Branding & Subtitle */}
       <div className="flex items-center gap-3">
+        <img
+          src="/logo.jpeg"
+          alt="GraphMind Logo"
+          className="w-8 h-8 rounded-lg object-cover border border-[#E8E2D8] shadow-2xs shrink-0"
+        />
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             <h1 className="text-lg font-bold text-[#1C1C1C] tracking-tight">
