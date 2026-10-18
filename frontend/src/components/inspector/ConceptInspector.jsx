@@ -284,15 +284,15 @@ export default function ConceptInspector({
         >
           {taskRequested ? (
             <span className="flex items-center gap-1.5">
-              <span>✓</span> AI Revision Task Queued!
+              <span>✓</span> Revision Task Added
             </span>
           ) : (
-            <span>+ Request AI Revision Task</span>
+            <span>+ Add Revision Task</span>
           )}
         </Button>
         {taskRequested && (
           <p className="text-[11px] text-[#57B2A0] text-center font-medium mt-1.5 animate-fade-in">
-            Targeted drill generated for {node.name}. Check Revision Planner!
+            Revision task added for {node.name}. View in Revision Planner.
           </p>
         )}
       </div>

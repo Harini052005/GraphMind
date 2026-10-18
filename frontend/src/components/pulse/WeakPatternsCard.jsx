@@ -28,11 +28,11 @@ export default function WeakPatternsCard({
         <div className="flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#D97757]" />
           <h3 className="text-sm font-bold text-[#1C1C1C] uppercase tracking-wider">
-            Critical Weak Pattern Alerts ({weakPatterns.length})
+            Needs Practice ({weakPatterns.length})
           </h3>
         </div>
         <Badge variant="terracotta" size="xs">
-          High Revision Priority
+          Priority Focus
         </Badge>
       </div>
 
@@ -71,7 +71,7 @@ export default function WeakPatternsCard({
             {/* Evidence Callout */}
             <div className="p-3 bg-[#FCE8E1]/60 border border-[#D97757]/30 rounded-xl text-xs text-[#D97757] space-y-1">
               <span className="font-semibold block flex items-center gap-1.5">
-                <span>⚠️</span> Automated Diagnostic Evidence:
+                <span>⚠️</span> Summary:
               </span>
               <p className="text-[11px] leading-relaxed text-[#5C4033]">
                 {wp.evidence}
@@ -99,11 +99,11 @@ export default function WeakPatternsCard({
               </div>
             )}
 
-            {/* Prerequisite Root Cause Lineage */}
+            {/* Prerequisite Knowledge */}
             {wp.rootCauseCandidates && wp.rootCauseCandidates.length > 0 && (
               <div className="p-3 bg-[#FAF7F2] border border-[#E8E2D8] rounded-xl text-xs space-y-1">
                 <span className="text-[#8C7E72] font-semibold block uppercase text-[10px] tracking-wider">
-                  Knowledge Lineage Root Cause:
+                  Prerequisite Knowledge:
                 </span>
                 {wp.rootCauseCandidates.map((rc, idx) => (
                   <div key={idx} className="flex items-center justify-between gap-2 pt-0.5">
@@ -125,7 +125,7 @@ export default function WeakPatternsCard({
             {wp.recommendedAction && (
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-[#E8E2D8]/70">
                 <p className="text-xs text-[#5C4033] leading-relaxed flex-1">
-                  💡 <span className="font-semibold text-[#1C1C1C]">Prescription:</span>{' '}
+                  💡 <span className="font-semibold text-[#1C1C1C]">Suggested Action:</span>{' '}
                   {wp.recommendedAction}
                 </p>
                 <Button
@@ -134,7 +134,7 @@ export default function WeakPatternsCard({
                   onClick={() => onOpenLogAttempt(wp.patternId)}
                   className="shrink-0 text-xs"
                 >
-                  + Log Practice Drill
+                  + Log Attempt
                 </Button>
               </div>
             )}

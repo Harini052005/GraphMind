@@ -52,7 +52,7 @@ export default function GraphView() {
     return (
       <div className="flex flex-col items-center justify-center h-full gap-3 text-[#5C4033]">
         <div className="w-8 h-8 rounded-full border-2 border-[#57B2A0] border-t-transparent animate-spin" />
-        <span className="text-sm font-medium">Loading Memory Graph & Pattern Lineage...</span>
+        <span className="text-sm font-medium">Loading pattern graph...</span>
       </div>
     )
   }
@@ -91,14 +91,14 @@ export default function GraphView() {
 
   return (
     <div className="flex flex-col h-full w-full gap-3">
-      {/* Top Knowledge Lineage Summary & Filter Toolbar */}
+      {/* Top Summary & Filter Toolbar */}
       <div className="flex flex-wrap items-center justify-between gap-3 bg-white border border-[#E8E2D8] px-4 py-2.5 rounded-2xl shadow-xs">
         {/* Left: Summary Metrics */}
         <div className="flex items-center gap-4 text-xs">
           <div className="flex items-center gap-1.5 font-semibold text-[#1C1C1C]">
-            <span>Cognitive Map:</span>
+            <span>Pattern Graph:</span>
             <span className="font-mono bg-[#FAF7F2] border border-[#E8E2D8] px-2 py-0.5 rounded-md text-[#5C4033]">
-              {summary.totalConcepts} Concepts
+              {summary.totalConcepts} Patterns
             </span>
             <span className="font-mono bg-[#FAF7F2] border border-[#E8E2D8] px-2 py-0.5 rounded-md text-[#5C4033]">
               {summary.totalDependencies} Prerequisites

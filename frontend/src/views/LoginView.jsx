@@ -58,8 +58,8 @@ export default function LoginView({
     <Modal
       isOpen={true}
       onClose={onClose}
-      title="User Identity Switcher"
-      subtitle="Isolated user tenant for attempts, graph mastery & revisions"
+      title="Switch Profile"
+      subtitle="Select or enter an account to load your practice data"
       maxWidth="max-w-md"
     >
       <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -99,7 +99,7 @@ export default function LoginView({
             if (error) setError('')
           }}
           error={error}
-          helperText="All attempts, revisions, and graph history are keyed to this User ID."
+          helperText="All attempts and progress are saved to this profile."
           autoFocus
         />
 
@@ -107,7 +107,7 @@ export default function LoginView({
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="block text-xs font-semibold text-[#5C4033] uppercase tracking-wider">
-              Quick Select Profiles
+              Profiles
             </label>
             <button
               type="button"

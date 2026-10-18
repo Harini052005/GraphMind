@@ -32,13 +32,13 @@ export default function PatternMasteryTable({
       <div className="p-5 border-b border-[#E8E2D8] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h3 className="text-sm font-bold text-[#1C1C1C] uppercase tracking-wider flex items-center gap-2">
-            <span>Pattern Mastery Diagnostic Table</span>
+            <span>Pattern Mastery</span>
             <span className="text-xs font-mono font-normal text-[#8C7E72]">
               ({filteredPatterns.length} of {patternMastery.length} patterns)
             </span>
           </h3>
           <p className="text-xs text-[#8C7E72] mt-0.5">
-            Deterministic mastery scores calculated from LeetCode success rates and mistake penalties
+            Mastery scores calculated from your solve rates and mistake frequency
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export default function PatternMasteryTable({
               <th className="py-3 px-4">Success Rate</th>
               <th className="py-3 px-4">Avg Speed</th>
               <th className="py-3 px-4">Status</th>
-              <th className="py-3 px-5">Diagnostic Evidence</th>
+              <th className="py-3 px-5">Performance Summary</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-[#E8E2D8]">

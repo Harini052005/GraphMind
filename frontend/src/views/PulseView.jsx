@@ -55,7 +55,7 @@ export default function PulseView({
     return (
       <div className="flex flex-col items-center justify-center h-full min-h-[400px] gap-3 text-[#5C4033]">
         <div className="w-8 h-8 rounded-full border-2 border-[#57B2A0] border-t-transparent animate-spin" />
-        <span className="text-sm font-medium">Computing learning diagnostics & mistake clusters...</span>
+        <span className="text-sm font-medium">Loading analytics...</span>
       </div>
     )
   }
@@ -64,7 +64,7 @@ export default function PulseView({
     return (
       <div className="flex flex-col items-center justify-center p-8 text-center gap-3">
         <div className="p-4 bg-[#FCE8E1] text-[#D97757] rounded-xl text-sm font-medium border border-[#D97757]/30 max-w-md">
-          {error || 'Unable to retrieve learning analytics'}
+          {error || 'Unable to load analytics'}
         </div>
         <Button
           variant="primary"
@@ -91,17 +91,14 @@ export default function PulseView({
         <div>
           <div className="flex items-center gap-2.5">
             <h2 className="text-xl font-bold text-[#1C1C1C] tracking-tight">
-              Pattern Pulse & Learning Analytics
+              Pattern Pulse & Analytics
             </h2>
             <Badge variant="mint" size="xs">
-              Live Diagnostics
-            </Badge>
-            <Badge variant="sage" size="xs">
-              Phase 4 Active
+              Live
             </Badge>
           </div>
           <p className="text-xs text-[#5C4033] mt-1">
-            Grounded cognitive diagnostics derived from your LeetCode practice and error history.
+            Performance metrics and mistake tracking from your LeetCode practice.
           </p>
         </div>
 

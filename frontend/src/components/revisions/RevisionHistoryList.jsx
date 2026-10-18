@@ -88,7 +88,7 @@ export default function RevisionHistoryList({
               No {statusFilter === 'ALL' ? '' : statusFilter.toLowerCase()} Revisions Found
             </h4>
             <p className="text-xs text-[#8C7E72]">
-              Run AI agent analysis to generate targeted revision tasks and checklists.
+              Generate a revision plan above to create practice checklists.
             </p>
           </div>
         </Card>
@@ -136,7 +136,7 @@ export default function RevisionHistoryList({
                   </p>
                   {rev.focusProblem && (
                     <p className="text-[11px] text-[#8C7E72]">
-                      <span className="font-semibold text-[#5C4033]">Target Drill:</span> {rev.focusProblem}
+                      <span className="font-semibold text-[#5C4033]">Target Problem:</span> {rev.focusProblem}
                     </p>
                   )}
                 </div>
@@ -158,7 +158,7 @@ export default function RevisionHistoryList({
                       ))}
                       {rev.checklist.length > 3 && (
                         <li className="text-[10px] text-[#8C7E72] italic pl-3">
-                          +{rev.checklist.length - 3} more procedural rules
+                          +{rev.checklist.length - 3} more steps
                         </li>
                       )}
                     </ul>
@@ -171,7 +171,7 @@ export default function RevisionHistoryList({
                     <div className="flex items-center gap-1.5">
                       <span className="text-xs leading-none">💡</span>
                       <span className="text-[11px] font-bold text-[#1C1C1C]">
-                        Learner Reflection & Breakthrough
+                        Notes & Learnings
                       </span>
                     </div>
                     <p className="text-xs text-[#5C4033] leading-relaxed italic pl-4">
@@ -189,7 +189,7 @@ export default function RevisionHistoryList({
                       onClick={() => onSelectRevision(rev)}
                       className="text-xs py-1 h-7"
                     >
-                      Focus Checklist & Complete
+                      View Checklist
                     </Button>
                   </div>
                 )}

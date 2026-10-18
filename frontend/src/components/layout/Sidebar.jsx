@@ -6,8 +6,7 @@ export default function Sidebar({
     {
       id: 'graph',
       label: 'Memory Graph',
-      description: 'Cognitive DSA map & concepts',
-      badge: 'Step 2',
+      description: 'Pattern dependencies & concepts',
       icon: (
         <svg
           className="w-4 h-4 shrink-0"
@@ -26,8 +25,7 @@ export default function Sidebar({
     {
       id: 'pulse',
       label: 'Pattern Pulse',
-      description: 'Mistake clusters & analytics',
-      badge: 'Step 3/4',
+      description: 'Performance & mistake trends',
       icon: (
         <svg
           className="w-4 h-4 shrink-0"
@@ -47,8 +45,7 @@ export default function Sidebar({
     {
       id: 'planner',
       label: 'Revision Planner',
-      description: 'AI-generated targeted drills',
-      badge: 'Step 5',
+      description: 'Targeted practice & checklists',
       icon: (
         <svg
           className="w-4 h-4 shrink-0"
@@ -80,7 +77,7 @@ export default function Sidebar({
               GraphMind
             </h1>
             <span className="text-[10px] text-[#8C7E72] font-medium tracking-wider uppercase mt-1 block">
-              RecallGraph AI
+              DSA Pattern Graph
             </span>
           </div>
         </div>
@@ -136,8 +133,8 @@ export default function Sidebar({
       {/* Footer Info */}
       <div className="p-4 border-t border-[#E8E2D8] bg-[#FAF7F2]/40 text-xs text-[#8C7E72]">
         <div className="flex items-center justify-between text-[11px] mb-1">
-          <span className="font-semibold text-[#5C4033]">Knowledge Engine</span>
-          <span className="text-[#57B2A0] font-mono">v1.0</span>
+          <span className="font-semibold text-[#5C4033]">Database</span>
+          <span className="text-[#57B2A0] font-mono">Connected</span>
         </div>
         <p className="text-[10px] leading-relaxed">
           Connected to FalkorDB <span className="font-mono text-[#5C4033]">leetcode_mastery</span>.

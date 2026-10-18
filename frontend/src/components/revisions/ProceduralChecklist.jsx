@@ -69,14 +69,14 @@ export default function ProceduralChecklist({
           <div>
             <div className="flex items-center gap-2">
               <h3 className="text-base font-bold text-[#1C1C1C]">
-                Procedural Repair Checklist
+                Pattern Checklist
               </h3>
               <Badge variant="sage" size="xs">
                 {patternName}
               </Badge>
             </div>
             <p className="text-xs text-[#5C4033] mt-0.5">
-              Step-by-step cognitive guardrails to eliminate repeated mistakes.
+              Step-by-step verification to avoid repeated mistakes.
             </p>
           </div>
 
@@ -152,7 +152,7 @@ export default function ProceduralChecklist({
             onClick={onOpenLogModal}
             className="text-xs"
           >
-            + Log Practice Attempt for Drill
+            + Log Practice Attempt
           </Button>
 
           <Button
@@ -161,7 +161,7 @@ export default function ProceduralChecklist({
             onClick={() => setShowReflectionModal(true)}
             className="font-semibold shadow-xs"
           >
-            Mark Revision Completed
+            Mark Completed
           </Button>
         </div>
       </Card>
@@ -171,8 +171,8 @@ export default function ProceduralChecklist({
         <Modal
           isOpen={true}
           onClose={() => setShowReflectionModal(false)}
-          title="Complete Revision Drill"
-          subtitle={`Record your reflection notes for ${patternName}`}
+          title="Complete Revision"
+          subtitle={`Save your notes and takeaways for ${patternName}`}
           maxWidth="max-w-md"
         >
           <form onSubmit={handleCompleteSubmit} className="space-y-4">
@@ -187,20 +187,20 @@ export default function ProceduralChecklist({
                 htmlFor={reflectionTextareaId}
                 className="block text-xs font-semibold text-[#5C4033] uppercase tracking-wider"
               >
-                What did you learn from this revision?
+                Key Learnings & Notes
               </label>
               <textarea
                 id={reflectionTextareaId}
                 rows="4"
                 required
-                placeholder="e.g. Mastered the duplicate-skipping while loop. Understood why sorting first is mandatory for Two Pointers."
+                placeholder="e.g. Mastered duplicate handling. Remember to check pointer boundaries before accessing elements."
                 value={reflectionNotes}
                 onChange={(e) => setReflectionNotes(e.target.value)}
                 className="w-full px-3 py-2 bg-white border border-[#E8E2D8] rounded-xl text-xs text-[#1C1C1C] placeholder:text-[#8C7E72] outline-none focus:border-[#57B2A0] focus:ring-2 focus:ring-[#98D8B0]/30 transition-all resize-y"
                 autoFocus
               />
               <p className="text-[11px] text-[#8C7E72]">
-                Your reflections are stored in FalkorDB to track retention over time.
+                Your notes will be saved with this revision history.
               </p>
             </div>
 

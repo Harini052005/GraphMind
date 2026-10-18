@@ -14,7 +14,7 @@ export default function TodayRecommendationCard({
         <div className="flex items-center justify-between">
           <p className="text-xs text-[#8C7E72]">No recommendation loaded yet.</p>
           <Button variant="primary" size="sm" onClick={onRefresh} disabled={isRefreshing}>
-            Run Agent Analysis
+            Generate Plan
           </Button>
         </div>
       </Card>
@@ -22,7 +22,6 @@ export default function TodayRecommendationCard({
   }
 
   const isWeakPattern = recommendation.decision === 'REVISE_WEAK_PATTERN'
-  const isAgentMode = recommendation.mode === 'llm-agent'
 
   return (
     <Card className="p-6 bg-white border border-[#E8E2D8] shadow-xs relative overflow-hidden">
@@ -34,7 +33,7 @@ export default function TodayRecommendationCard({
       />
 
       <div className="space-y-4 pt-1">
-        {/* Top Badges & Agent Mode */}
+        {/* Top Badges */}
         <div className="flex flex-wrap items-center justify-between gap-2.5">
           <div className="flex items-center gap-2">
             <Badge
@@ -42,7 +41,7 @@ export default function TodayRecommendationCard({
               size="xs"
               dot
             >
-              {isWeakPattern ? 'Priority Revision Required' : 'Explore Next Topic'}
+              {isWeakPattern ? 'Revision Recommended' : 'Next Topic'}
             </Badge>
 
             {recommendation.targetPatternName && (
@@ -53,16 +52,6 @@ export default function TodayRecommendationCard({
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span
-              className={`px-2 py-0.5 rounded-full text-[11px] font-mono border ${
-                isAgentMode
-                  ? 'bg-[#57B2A0]/15 text-[#1C5248] border-[#57B2A0]/40'
-                  : 'bg-[#FAF7F2] text-[#8C7E72] border-[#E8E2D8]'
-              }`}
-            >
-              {isAgentMode ? '🤖 LLM Agent Reasoning' : '⚡ Deterministic Graph Engine'}
-            </span>
-
             <Button
               variant="outline"
               size="sm"
@@ -73,7 +62,7 @@ export default function TodayRecommendationCard({
               <span className={`text-xs ${isRefreshing ? 'animate-spin' : ''}`}>
                 🔄
               </span>
-              <span>{isRefreshing ? 'Thinking...' : 'Run Agent Analysis'}</span>
+              <span>{isRefreshing ? 'Refreshing...' : 'Refresh'}</span>
             </Button>
           </div>
         </div>
@@ -81,18 +70,18 @@ export default function TodayRecommendationCard({
         {/* Headline & Reasoning */}
         <div className="space-y-1.5">
           <h2 className="text-xl font-bold text-[#1C1C1C] tracking-tight">
-            {recommendation.headline || 'Personalized DSA Revision Task'}
+            {recommendation.headline || 'Recommended Practice Focus'}
           </h2>
           <p className="text-sm text-[#5C4033] leading-relaxed">
             {recommendation.reasoning}
           </p>
         </div>
 
-        {/* Grounded Evidence Chips */}
+        {/* Factors / Evidence Chips */}
         {recommendation.evidence?.length > 0 && (
           <div className="space-y-1.5 pt-1">
             <span className="block text-[11px] font-semibold text-[#8C7E72] uppercase tracking-wider">
-              Grounded Graph Evidence
+              Identified Factors
             </span>
             <div className="flex flex-wrap gap-2">
               {recommendation.evidence.map((ev, idx) => (
@@ -115,7 +104,7 @@ export default function TodayRecommendationCard({
               <span className="text-base leading-none mt-0.5">🎯</span>
               <div>
                 <span className="text-xs font-bold text-[#1C1C1C] block">
-                  Recommended Problem Objective
+                  Recommended Problem
                 </span>
                 <p className="text-xs text-[#5C4033] mt-0.5">
                   {recommendation.actionableTask.problemRecommendation}
@@ -129,7 +118,7 @@ export default function TodayRecommendationCard({
               onClick={() => onFocusTask(recommendation)}
               className="shrink-0"
             >
-              Start Checklist Drill
+              View Checklist
             </Button>
           </div>
         )}

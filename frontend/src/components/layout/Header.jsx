@@ -24,14 +24,14 @@ export default function Header({
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
             <h1 className="text-lg font-bold text-[#1C1C1C] tracking-tight">
-              RecallGraph <span className="text-[#57B2A0]">AI</span>
+              GraphMind
             </h1>
             <span className="text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-[#FAF7F2] text-[#8C7E72] border border-[#E8E2D8]">
               v1.0
             </span>
           </div>
           <p className="text-xs text-[#8C7E72] hidden sm:block">
-            Your coding history. Your next breakthrough.
+            Pattern-based LeetCode mastery & revision tracking
           </p>
         </div>
       </div>
@@ -53,7 +53,7 @@ export default function Header({
         <div
           title={
             health.falkordb?.graph
-              ? `FalkorDB: ${health.falkordb.graph} | LLM: ${health?.llm?.configured ? 'Active' : 'Fallback'}`
+              ? `Graph: ${health.falkordb.graph}`
               : 'Backend connection state'
           }
         >

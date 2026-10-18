@@ -62,7 +62,7 @@ export default function PlannerView({
       const list = await fetchRevisions()
       setRevisions(list || [])
     } catch (err) {
-      setError(err.message || 'Agent analysis failed')
+      setError(err.message || 'Failed to generate revision plan')
     } finally {
       setIsRefreshing(false)
     }
@@ -91,7 +91,7 @@ export default function PlannerView({
       <div className="flex flex-col items-center justify-center h-full min-h-[400px] gap-3 text-[#5C4033]">
         <div className="w-8 h-8 rounded-full border-2 border-[#57B2A0] border-t-transparent animate-spin" />
         <span className="text-sm font-medium">
-          Synthesizing AI agent recommendations & procedural checklists...
+          Loading recommendations and checklists...
         </span>
       </div>
     )
@@ -104,17 +104,14 @@ export default function PlannerView({
         <div>
           <div className="flex items-center gap-2.5">
             <h2 className="text-xl font-bold text-[#1C1C1C] tracking-tight">
-              AI Revision Planner
+              Revision Planner
             </h2>
             <Badge variant="mint" size="xs">
-              Phase 5 & 6 Live
-            </Badge>
-            <Badge variant="sage" size="xs">
-              Adaptive Drills
+              Active
             </Badge>
           </div>
           <p className="text-xs text-[#5C4033] mt-1">
-            LLM agent recommendations with grounded citations to eliminate your recurring error patterns.
+            Targeted revision focus and checklists based on your mistake patterns.
           </p>
         </div>
 
@@ -126,9 +123,9 @@ export default function PlannerView({
             disabled={isRefreshing}
           >
             <span className={`text-xs ${isRefreshing ? 'animate-spin' : ''}`}>
-              🤖
+              🔄
             </span>
-            <span>{isRefreshing ? 'Thinking...' : 'Run Agent Analysis'}</span>
+            <span>{isRefreshing ? 'Analyzing...' : 'Refresh Plan'}</span>
           </Button>
 
           <Button
