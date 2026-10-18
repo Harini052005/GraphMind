@@ -6,6 +6,8 @@ import { initializeSchema, seedSemanticPatterns } from './graph/schema.js'
 import patternsRouter from './routes/patterns.routes.js'
 import attemptsRouter from './routes/attempts.routes.js'
 import analyticsRouter from './routes/analytics.routes.js'
+import agentRouter from './routes/agent.routes.js'
+import revisionsRouter from './routes/revisions.routes.js'
 
 const app = express()
 
@@ -38,6 +40,8 @@ app.get('/api/health', async (req, res) => {
 app.use('/api/patterns', patternsRouter)
 app.use('/api/attempts', attemptsRouter)
 app.use('/api/analytics', analyticsRouter)
+app.use('/api/agent', agentRouter)
+app.use('/api/revisions', revisionsRouter)
 
 // Global Error Handler
 app.use((err, req, res, next) => {
