@@ -46,7 +46,7 @@ export async function createRevisionService(userId = 'demo-user', payload) {
           focusProblem: $focusProblem,
           status: 'PENDING',
           source: $source,
-          createdAt: datetime()
+          createdAt: $createdAt
         })
         CREATE (u)-[:HAS_REVISION]->(r)
         CREATE (r)-[:TARGETS]->(pt)
@@ -61,6 +61,7 @@ export async function createRevisionService(userId = 'demo-user', payload) {
         checklistJson: JSON.stringify(checklist),
         focusProblem: payload.focusProblem || '',
         source: payload.source || 'agent',
+        createdAt,
       })
 
       inMemoryStore.createRevision(revisionRecord)
@@ -103,18 +104,20 @@ export async function getRevisionsService(userId = 'demo-user', filters = {}) {
       const result = await executeQuery(cypher, { userId })
       if (result && result.data && result.data.length > 0) {
         return result.data.map((row) => ({
-          id: row[0],
-          patternId: row[1],
-          patternName: row[2],
-          reason: row[3],
-          recommendation: row[4],
-          checklist: typeof row[5] === 'string' ? JSON.parse(row[5] || '[]') : row[5] || [],
-          focusProblem: row[6],
-          status: row[7],
-          source: row[8],
-          reflectionNotes: row[9] || '',
-          createdAt: row[10],
-          completedAt: row[11] || null,
+          id: row.id ?? row[0],
+          patternId: row.patternId ?? row[1],
+          patternName: row.patternName ?? row[2],
+          reason: row.reason ?? row[3],
+          recommendation: row.recommendation ?? row[4],
+          checklist: typeof (row.checklist ?? row[5]) === 'string'
+            ? JSON.parse((row.checklist ?? row[5]) || '[]')
+            : (row.checklist ?? row[5]) || [],
+          focusProblem: row.focusProblem ?? row[6] ?? '',
+          status: row.status ?? row[7],
+          source: row.source ?? row[8] ?? 'agent',
+          reflectionNotes: row.reflectionNotes ?? row[9] ?? '',
+          createdAt: row.createdAt ?? row[10],
+          completedAt: row.completedAt ?? row[11] ?? null,
         }))
       }
     } catch (err) {
@@ -142,7 +145,7 @@ export async function updateRevisionStatusService(userId, revisionId, updates = 
         MATCH (u:User { id: $userId })-[:HAS_REVISION]->(r:Revision { id: $revisionId })
         SET r.status = $status,
             r.reflectionNotes = $reflectionNotes,
-            r.completedAt = CASE WHEN $status = 'COMPLETED' THEN datetime() ELSE r.completedAt END
+            r.completedAt = CASE WHEN $status = 'COMPLETED' THEN $completedAt ELSE r.completedAt END
         RETURN r.id AS id, r.status AS status
       `
       await executeQuery(cypher, {
@@ -150,6 +153,7 @@ export async function updateRevisionStatusService(userId, revisionId, updates = 
         revisionId,
         status: status || 'COMPLETED',
         reflectionNotes: reflectionNotes || '',
+        completedAt: new Date().toISOString(),
       })
     } catch (err) {
       console.warn(`[RevisionService] Cypher update warning: ${err.message}. Mirroring in store.`)
