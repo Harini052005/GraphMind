@@ -85,11 +85,11 @@ export async function getPatternsGraph(userId = 'demo-user') {
       const result = await executeQuery(cypher, { userId })
       if (result && result.data) {
         userAttempts = result.data.map((row) => ({
-          patternId: row[0],
-          result: row[1],
-          timeTakenMinutes: row[2],
-          mistakeCategory: row[3],
-          createdAt: row[4],
+          patternId: row.patternId ?? row[0],
+          result: row.result ?? row[1],
+          timeTakenMinutes: row.timeTaken ?? row.timeTakenMinutes ?? row[2],
+          mistakeCategory: row.mistakeCategory ?? row[3],
+          createdAt: row.createdAt ?? row[4],
         }))
       }
     } catch (err) {
