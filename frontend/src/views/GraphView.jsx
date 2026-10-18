@@ -73,7 +73,7 @@ export default function GraphView() {
   }
 
   const selectedNode =
-    data.nodes.find((n) => n.id === selectedNodeId) || data.nodes[0]
+    data.nodes?.find((n) => n.id === selectedNodeId) || data.nodes?.[0]
 
   const summary = data.summary || {
     totalConcepts: data.nodes?.length || 0,
@@ -181,7 +181,7 @@ export default function GraphView() {
             allEdges={data.edges}
             allNodes={data.nodes}
             onRequestRevision={(n) => {
-              console.log('Revision requested for:', n.id)
+              console.log('Revision requested for:', n?.id)
             }}
           />
         </div>

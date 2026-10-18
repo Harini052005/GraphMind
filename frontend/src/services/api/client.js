@@ -9,8 +9,11 @@ export function setActiveUserId(userId) {
 }
 
 export async function apiRequest(endpoint, options = {}) {
-  const { method = 'GET', body, headers = {} } = options
+  const { method = 'GET', body, headers = {}, timeout = 5000 } = options
   const userId = getActiveUserId()
+
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
 
   const config = {
     method,
@@ -19,21 +22,39 @@ export async function apiRequest(endpoint, options = {}) {
       'x-user-id': userId,
       ...headers,
     },
+    signal: controller.signal,
   }
 
   if (body) {
     config.body = JSON.stringify(body)
   }
 
-  const response = await fetch(`${BASE_URL}${endpoint}`, config)
-  const data = await response.json().catch(() => ({}))
+  try {
+    const response = await fetch(`${BASE_URL}${endpoint}`, config)
+    clearTimeout(timeoutId)
+    const data = await response.json().catch(() => ({}))
 
-  if (!response.ok) {
-    const error = new Error(data?.error?.message || `Request failed (${response.status})`)
-    error.status = response.status
-    error.data = data
-    throw error
+    if (!response.ok) {
+      const error = new Error(data?.error?.message || `Request failed (${response.status})`)
+      error.status = response.status
+      error.data = data
+      throw error
+    }
+
+    return data
+  } catch (err) {
+    clearTimeout(timeoutId)
+    throw err
   }
+}
 
-  return data
+export async function checkBackendHealth() {
+  try {
+    return await apiRequest('/api/health', { timeout: 3000 })
+  } catch (error) {
+    return {
+      status: 'offline',
+      error: error.message,
+    }
+  }
 }
