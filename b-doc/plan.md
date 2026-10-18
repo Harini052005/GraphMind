@@ -55,13 +55,14 @@ backend/
 - Verified with 7 passing Vitest tests and live HTTP execution.
 - **Handoff**: Created `f-doc/step-03-attempts.md` for Member B.
 
-### Phase 4: Deterministic Analytics & Weak Pattern Scorer (NEXT ⏳)
-- Multi-dimensional scoring formula (Success Rate $< 60\%$, repeated mistakes $\ge 2$, recency decay $> 7$ days).
-- Cypher aggregation queries for pattern mastery and mistake clustering.
-- `GET /api/analytics` & `GET /api/patterns`.
-- **Handoff**: Generate `f-doc/step-04-analytics.md` for Members A & B.
+### Phase 4: Deterministic Analytics & Weak Pattern Scorer (COMPLETED ✅)
+- Multi-dimensional transparent scoring formula (Success Rate $< 50\%$, repeated mistakes $\ge 2$, recency decay $> 7$ days).
+- Implemented insufficient-evidence safeguard (single failure never prematurely labeled Critical).
+- Root-cause dependency candidate analysis powered by prerequisite graph edges.
+- `GET /api/analytics` endpoint verified and tested with 10 total passing Vitest tests.
+- **Handoff**: Created `f-doc/step-04-analytics.md` for Member B (Mouni).
 
-### Phase 5: AI Agent Engine with Graph Tool Calling
+### Phase 5: AI Agent Engine with Graph Tool Calling (NEXT ⏳)
 - Graph Tools: `getUserHistory`, `getPatternStats`, `getRepeatedMistakes`, `createRevisionTask`.
 - LLM prompt engineering with strict Zod schema validation (grounded evidence citations).
 - Deterministic fallback engine for when `LLM_API_KEY` is not provided.
