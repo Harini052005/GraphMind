@@ -45,16 +45,17 @@ backend/
 - `GET /api/patterns` endpoint verified and tested with Vitest.
 - **Handoff**: Created `f-doc/step-02-graph-patterns.md` for Member A.
 
-### Phase 3: Attempt Recording & Cypher Persistence (NEXT ⏳)
+### Phase 3: Attempt Recording & Cypher Persistence (COMPLETED ✅)
 - Parameterized Cypher query to atomically record problem attempts:
   - Create/merge `(:User)`, `(:Problem)`, `(:Pattern)`, `(:Mistake)`.
   - Link `(User)-[:MADE_ATTEMPT]->(Attempt)-[:FOR_PROBLEM]->(Problem)`.
   - Link `(Attempt)-[:USES_PATTERN]->(Pattern)` and optional `(Attempt)-[:HAD_MISTAKE]->(Mistake)`.
-- Zod validation for attempt submissions.
-- `POST /api/attempts` & `GET /api/attempts`.
-- **Handoff**: Generate `f-doc/step-03-attempts.md` for Member B.
+- Zod validation for attempt submissions with strict boundary checks.
+- Implemented `POST /api/attempts` and `GET /api/attempts` with tenant isolation.
+- Verified with 7 passing Vitest tests and live HTTP execution.
+- **Handoff**: Created `f-doc/step-03-attempts.md` for Member B.
 
-### Phase 4: Deterministic Analytics & Weak Pattern Scorer
+### Phase 4: Deterministic Analytics & Weak Pattern Scorer (NEXT ⏳)
 - Multi-dimensional scoring formula (Success Rate $< 60\%$, repeated mistakes $\ge 2$, recency decay $> 7$ days).
 - Cypher aggregation queries for pattern mastery and mistake clustering.
 - `GET /api/analytics` & `GET /api/patterns`.
