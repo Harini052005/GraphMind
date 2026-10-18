@@ -47,6 +47,13 @@ coverage/
 .vitest/
 .turbo/
 .cache/
+.vite/
+*.tsbuildinfo
+
+# Editor & OS files
+[Dd]esktop.ini
+ehthumbs.db
 
 # FalkorDB / Redis database dumps
 dump.rdb
+

@@ -1,17 +1,117 @@
+import { useState } from 'react'
+import Sidebar from './components/layout/Sidebar'
+import Header from './components/layout/Header'
+import LoginView from './views/LoginView'
+import GraphView from './views/GraphView'
+import Card from './components/ui/Card'
+import Badge from './components/ui/Badge'
+
 export default function App() {
+  const [activeTab, setActiveTab] = useState('graph') // 'graph' | 'pulse' | 'planner'
+  const [user, setUser] = useState(
+    () => localStorage.getItem('recallgraph_user_id') || 'demo-user'
+  )
+  const [showLogin, setShowLogin] = useState(false)
+
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center p-6">
-      <div className="max-w-md w-full text-center space-y-4 p-8 rounded-2xl bg-slate-900/60 border border-slate-800 shadow-xl backdrop-blur-sm">
-        <h1 className="text-3xl font-bold tracking-tight text-white">
-          RecallGraph AI
-        </h1>
-        <p className="text-slate-400 text-sm">
-          React + Vite + Tailwind CSS is configured and ready.
-        </p>
-        <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-          Clean Structure Ready
-        </div>
+    <div className="flex h-screen w-screen overflow-hidden bg-[#F5F0E8] text-[#1C1C1C]">
+      {/* Left Navigation Rail (Built by Member A) */}
+      <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
+
+      {/* Main Content Area */}
+      <div className="flex flex-col flex-1 h-full overflow-hidden">
+        {/* Top Header (Built by Member B) */}
+        <Header user={user} onOpenLogin={() => setShowLogin(true)} />
+
+        {/* Tab View Container */}
+        <main className="flex-1 overflow-auto p-6">
+          {activeTab === 'graph' && <GraphView />}
+
+          {activeTab === 'pulse' && (
+            <div className="h-full flex flex-col gap-6">
+              <Card className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-bold text-[#1C1C1C]">
+                      Pattern Pulse Analytics
+                    </h2>
+                    <p className="text-sm text-[#5C4033] mt-1">
+                      Deterministic weak pattern scoring, mistake clustering, and recency decay.
+                    </p>
+                  </div>
+                  <Badge variant="terracotta" size="sm">
+                    Coming in Step 4
+                  </Badge>
+                </div>
+              </Card>
+
+              <div className="flex-1 bg-[#FAF7F2] border border-[#E8E2D8] rounded-2xl flex items-center justify-center p-8 text-center">
+                <div className="max-w-md space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-[#D97757]/15 text-[#D97757] flex items-center justify-center mx-auto">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-base font-bold text-[#1C1C1C]">
+                    Pattern Pulse Engine
+                  </h3>
+                  <p className="text-xs text-[#8C7E72] leading-relaxed">
+                    This view will compute mistake clusters (e.g. repeated off-by-one errors and base case omissions) and weak pattern thresholds as defined in Phase 4.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'planner' && (
+            <div className="h-full flex flex-col gap-6">
+              <Card className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="text-xl font-bold text-[#1C1C1C]">
+                      Revision Planner
+                    </h2>
+                    <p className="text-sm text-[#5C4033] mt-1">
+                      AI agent-recommended procedural checklists and targeted problem sets.
+                    </p>
+                  </div>
+                  <Badge variant="sage" size="sm">
+                    Coming in Step 5
+                  </Badge>
+                </div>
+              </Card>
+
+              <div className="flex-1 bg-[#FAF7F2] border border-[#E8E2D8] rounded-2xl flex items-center justify-center p-8 text-center">
+                <div className="max-w-md space-y-3">
+                  <div className="w-12 h-12 rounded-2xl bg-[#57B2A0]/20 text-[#57B2A0] flex items-center justify-center mx-auto">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                  </div>
+                  <h3 className="text-base font-bold text-[#1C1C1C]">
+                    Procedural Revision Checklists
+                  </h3>
+                  <p className="text-xs text-[#8C7E72] leading-relaxed">
+                    Interactive checklists generated by the LLM Agent with grounded citations to your previous LeetCode attempts.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </main>
       </div>
+
+      {/* User Switcher / Login Modal (Built by Member B) */}
+      {showLogin && (
+        <LoginView
+          currentUser={user}
+          onSelectUser={(newUser) => {
+            setUser(newUser)
+            setShowLogin(false)
+          }}
+          onClose={() => setShowLogin(false)}
+        />
+      )}
     </div>
   )
 }
