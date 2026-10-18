@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { fetchPatternsGraph } from '../services/api/graphApi'
+import { createRevision } from '../services/api/revisionsApi'
 import MemoryGraphCanvas from '../components/graph/MemoryGraphCanvas'
 import ConceptInspector from '../components/inspector/ConceptInspector'
 import Badge from '../components/ui/Badge'
@@ -180,8 +181,25 @@ export default function GraphView() {
             node={selectedNode}
             allEdges={data.edges}
             allNodes={data.nodes}
-            onRequestRevision={(n) => {
-              console.log('Revision requested for:', n?.id)
+            onRequestRevision={async (n) => {
+              if (!n) return
+              try {
+                await createRevision({
+                  patternId: n.id,
+                  patternName: n.name,
+                  reason: `Direct revision requested for ${n.name}`,
+                  recommendation: `Targeted review of ${n.name} foundational invariants and test cases`,
+                  checklist: [
+                    `Review prerequisite dependencies for ${n.name}`,
+                    `Practice 1 Easy warm-up problem`,
+                    `Identify boundary conditions and edge cases`,
+                    `Solve 1 Medium problem without assistance`,
+                  ],
+                  focusProblem: `Targeted ${n.name} drill`,
+                })
+              } catch (err) {
+                console.warn('Failed to queue revision', err)
+              }
             }}
           />
         </div>

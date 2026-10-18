@@ -4,6 +4,7 @@ import Header from './components/layout/Header'
 import LoginView from './views/LoginView'
 import GraphView from './views/GraphView'
 import PulseView from './views/PulseView'
+import PlannerView from './views/PlannerView'
 import LogAttemptModal from './components/attempts/LogAttemptModal'
 
 export default function App() {
@@ -48,17 +49,11 @@ export default function App() {
           )}
 
           {activeTab === 'planner' && (
-            <div className="h-full flex flex-col items-center justify-center p-8 text-center text-[#5C4033] bg-white border border-[#E8E2D8] rounded-2xl shadow-xs max-w-2xl mx-auto my-auto">
-              <div className="w-12 h-12 rounded-full bg-[#FAF7F2] border border-[#E8E2D8] flex items-center justify-center mb-3 text-2xl">
-                📋
-              </div>
-              <h3 className="text-base font-bold text-[#1C1C1C]">
-                AI Revision Planner
-              </h3>
-              <p className="text-xs text-[#8C7E72] mt-1 max-w-sm leading-relaxed">
-                Active recall schedule, spaced repetition checkpoints, and targeted repair drills (Coming in Step 5).
-              </p>
-            </div>
+            <PlannerView
+              key={`${user}-${attemptsRefreshTrigger}`}
+              onOpenLogModal={() => setShowLogModal(true)}
+              refreshTrigger={attemptsRefreshTrigger}
+            />
           )}
         </main>
       </div>
