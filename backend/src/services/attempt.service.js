@@ -61,13 +61,13 @@ export async function recordAttemptService(userId = 'demo-user', payload) {
       // Parameterized Cypher query with atomic MERGE and relationship writes
       const cypher = `
         MERGE (u:User { id: $userId })
-        ON CREATE SET u.createdAt = datetime()
+        ON CREATE SET u.createdAt = $createdAt
 
         MERGE (p:Problem { id: $problemSlug })
         ON CREATE SET p.title = $problemTitle,
                       p.leetcodeUrl = $leetcodeUrl,
                       p.difficulty = $difficulty,
-                      p.createdAt = datetime()
+                      p.createdAt = $createdAt
 
         MERGE (pt:Pattern { id: $patternId })
 
@@ -77,7 +77,7 @@ export async function recordAttemptService(userId = 'demo-user', payload) {
           timeTakenMinutes: $timeTakenMinutes,
           notes: $notes,
           codeSnippet: $codeSnippet,
-          createdAt: datetime()
+          createdAt: $createdAt
         })
 
         CREATE (u)-[:MADE_ATTEMPT]->(a)
@@ -110,6 +110,7 @@ export async function recordAttemptService(userId = 'demo-user', payload) {
         notes: payload.notes || '',
         codeSnippet: payload.codeSnippet || '',
         mistakeCategory: payload.mistakeCategory?.trim() || '',
+        createdAt,
       })
 
       // Also mirror in in-memory store for instant cache retrieval
@@ -165,18 +166,18 @@ export async function getUserAttemptsService(userId = 'demo-user', filters = {})
 
       if (result && result.data && result.data.length > 0) {
         return result.data.map((row) => ({
-          id: row[0],
-          problemTitle: row[1],
-          leetcodeUrl: row[2],
-          difficulty: row[3],
-          patternId: row[4],
-          patternName: row[5],
-          result: row[6],
-          timeTakenMinutes: row[7],
-          mistakeCategory: row[8] || null,
-          notes: row[9] || '',
-          codeSnippet: row[10] || '',
-          createdAt: row[11],
+          id: row.id ?? row[0],
+          problemTitle: row.problemTitle ?? row[1],
+          leetcodeUrl: row.leetcodeUrl ?? row[2],
+          difficulty: row.difficulty ?? row[3],
+          patternId: row.patternId ?? row[4],
+          patternName: row.patternName ?? row[5],
+          result: row.result ?? row[6],
+          timeTakenMinutes: row.timeTakenMinutes ?? row[7],
+          mistakeCategory: row.mistakeCategory ?? row[8] ?? null,
+          notes: row.notes ?? row[9] ?? '',
+          codeSnippet: row.codeSnippet ?? row[10] ?? '',
+          createdAt: row.createdAt ?? row[11],
         }))
       }
     } catch (err) {

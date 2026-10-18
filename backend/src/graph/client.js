@@ -62,7 +62,7 @@ export async function executeQuery(cypher, params = {}) {
 export async function checkFalkorHealth() {
   try {
     const graph = await getGraph()
-    const result = await graph.query('RETURN 1 AS status, datetime() AS serverTime')
+    const result = await graph.query('RETURN 1 AS status, timestamp() AS serverTime')
     return {
       connected: true,
       graph: config.falkor.graphName,

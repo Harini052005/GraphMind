@@ -27,7 +27,11 @@ export async function initializeSchema() {
       await executeQuery(query)
     } catch (err) {
       // Ignore if index already exists
-      if (!err.message?.includes('already exists') && !err.message?.includes('Index already exists')) {
+      if (
+        !err.message?.includes('already exists') &&
+        !err.message?.includes('already indexed') &&
+        !err.message?.includes('Index already exists')
+      ) {
         console.warn(`[Schema] Index notice: ${err.message}`)
       }
     }

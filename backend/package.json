@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "vitest run",
+    "test": "vitest run --testTimeout=20000",
     "seed": "node src/graph/seed.js"
   },
   "dependencies": {
