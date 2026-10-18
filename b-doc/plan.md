@@ -62,20 +62,23 @@ backend/
 - `GET /api/analytics` endpoint verified and tested with 10 total passing Vitest tests.
 - **Handoff**: Created `f-doc/step-04-analytics.md` for Member B (Mouni).
 
-### Phase 5: AI Agent Engine with Graph Tool Calling (NEXT ⏳)
+### Phase 5: AI Agent Engine with Graph Tool Calling (COMPLETED ✅)
 - Graph Tools: `getUserHistory`, `getPatternStats`, `getRepeatedMistakes`, `createRevisionTask`.
-- LLM prompt engineering with strict Zod schema validation (grounded evidence citations).
-- Deterministic fallback engine for when `LLM_API_KEY` is not provided.
-- `POST /api/agent/recommendation`.
+- Strict Zod schema validation ensuring grounded evidence and no hallucinations.
+- Resilient deterministic fallback engine when `LLM_API_KEY` is not provided or offline.
+- `POST /api/agent/recommendation` endpoint mounted and verified.
 
-### Phase 6: Revision System & Procedural Checklists
-- Cypher queries to create, retrieve, and update revision tasks:
-  - `(User)-[:HAS_REVISION]->(Revision)-[:TARGETS]->(Pattern)`.
-- Procedural checklist generator for targeted pattern revision.
-- `GET /api/revisions`, `POST /api/revisions`, `PATCH /api/revisions/:id`.
-- **Handoff**: Generate `f-doc/step-05-revisions.md` for Member B.
+### Phase 6: Revision System & Procedural Checklists (COMPLETED ✅)
+- Graph schema linking `(User)-[:HAS_REVISION]->(Revision)-[:TARGETS]->(Pattern)`.
+- Actionable procedural memory checklists tailored per DSA pattern and recurring mistake.
+- Revision task lifecycle (`PENDING` $\rightarrow$ `COMPLETED` with user reflection notes).
+- `GET /api/revisions`, `POST /api/revisions`, `PATCH /api/revisions/:id` endpoints mounted and verified.
+- 14 total passing Vitest unit & integration tests.
+- **Handoff**: Created `f-doc/step-05-agent-revisions.md` for Member B (Mouni).
 
-### Phase 7: Automated Tests & Demo Seeding
-- Vitest unit tests for scoring rules, Zod schemas, and fallback logic.
-- Realistic seed script (`npm run seed`) demonstrating weak patterns and repeated mistakes.
-- Final end-to-end verification.
+### Phase 7: Automated Tests & Demo Seeding (COMPLETED ✅)
+- Realistic seed script (`backend/src/graph/seed.js` / `npm run seed`) generating 13 attempts, weak patterns, repeated mistakes, and revision tasks.
+- Complete Vitest test suite with 14 passing unit and integration tests.
+- Full end-to-end API verification on live endpoints.
+- **Handoff**: Created `f-doc/step-06-demo-seed-and-testing.md` for Harini & Mouni.
+
