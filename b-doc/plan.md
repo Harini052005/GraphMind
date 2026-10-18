@@ -76,6 +76,9 @@ backend/
 - 14 total passing Vitest unit & integration tests.
 - **Handoff**: Created `f-doc/step-05-agent-revisions.md` for Member B (Mouni).
 
-### Phase 7: Automated Tests & Demo Seeding (NEXT ⏳)
-- Realistic seed script (`npm run seed`) demonstrating weak patterns and repeated mistakes.
-- Final end-to-end verification.
+### Phase 7: Automated Tests & Demo Seeding (COMPLETED ✅)
+- Realistic seed script (`backend/src/graph/seed.js` / `npm run seed`) generating 13 attempts, weak patterns, repeated mistakes, and revision tasks.
+- Complete Vitest test suite with 14 passing unit and integration tests.
+- Full end-to-end API verification on live endpoints.
+- **Handoff**: Created `f-doc/step-06-demo-seed-and-testing.md` for Harini & Mouni.
+
