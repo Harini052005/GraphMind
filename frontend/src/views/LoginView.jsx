@@ -7,13 +7,19 @@ import Badge from '../components/ui/Badge'
 
 const PRESET_USERS = [
   { id: 'demo-user', role: 'Default Test Account' },
+  { id: 'harini-dev', role: 'Frontend Engineer' },
+  { id: 'mouni-dev', role: 'Frontend Engineer' },
+  { id: 'ranjitha-dev', role: 'Backend Engineer' },
   { id: 'alex_coder', role: 'DSA Candidate' },
-  { id: 'dev_sarah', role: 'Competitive Programmer' },
   { id: 'leetcode_pro', role: 'Pattern Master' },
 ]
 
-export default function LoginView({ currentUser, onSelectUser, onClose }) {
-  const [customUserId, setCustomUserId] = useState(currentUser || '')
+export default function LoginView({
+  currentUser = 'demo-user',
+  onSelectUser = () => {},
+  onClose = () => {},
+}) {
+  const [customUserId, setCustomUserId] = useState(currentUser || 'demo-user')
   const [error, setError] = useState('')
 
   function handleSave(selectedId) {
@@ -37,7 +43,7 @@ export default function LoginView({ currentUser, onSelectUser, onClose }) {
       isOpen={true}
       onClose={onClose}
       title="User Identity Switcher"
-      subtitle="Switch your active session or login with a different profile"
+      subtitle="Isolated user tenant for attempts, graph mastery & revisions"
       maxWidth="max-w-md"
     >
       <form onSubmit={handleFormSubmit} className="space-y-5">
@@ -63,7 +69,7 @@ export default function LoginView({ currentUser, onSelectUser, onClose }) {
         <Input
           label="Custom User ID / Handle"
           id="user-id-input"
-          placeholder="e.g. harini_dev"
+          placeholder="e.g. harini-dev"
           value={customUserId}
           onChange={(e) => {
             setCustomUserId(e.target.value)
@@ -121,7 +127,7 @@ export default function LoginView({ currentUser, onSelectUser, onClose }) {
             Cancel
           </Button>
           <Button variant="primary" size="md" type="submit">
-            Save & Continue
+            Apply & Switch
           </Button>
         </div>
       </form>

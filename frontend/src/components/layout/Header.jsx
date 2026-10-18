@@ -1,42 +1,13 @@
-import { useState, useEffect } from 'react'
-import { checkBackendHealth } from '../../services/api/client'
 import StatusIndicator from '../ui/StatusIndicator'
 import Button from '../ui/Button'
+import { useBackendHealth } from '../../hooks/useBackendHealth'
 
-export default function Header({ user, onOpenLogin, onOpenLogAttempt }) {
-  const [healthStatus, setHealthStatus] = useState('loading')
-  const [healthDetails, setHealthDetails] = useState(null)
-
-  useEffect(() => {
-    let isMounted = true
-
-    async function verifyHealth() {
-      try {
-        const data = await checkBackendHealth()
-        if (!isMounted) return
-
-        if (data?.status === 'ok') {
-          setHealthStatus('ok')
-          setHealthDetails(data)
-        } else {
-          setHealthStatus('degraded')
-          setHealthDetails(data)
-        }
-      } catch {
-        if (!isMounted) return
-        setHealthStatus('offline')
-        setHealthDetails(null)
-      }
-    }
-
-    verifyHealth()
-    const interval = setInterval(verifyHealth, 30000)
-
-    return () => {
-      isMounted = false
-      clearInterval(interval)
-    }
-  }, [])
+export default function Header({
+  user = 'demo-user',
+  onOpenLogin = () => {},
+  onOpenLogAttempt,
+}) {
+  const health = useBackendHealth(15000)
 
   // Get user avatar initials
   const initials =
@@ -47,7 +18,7 @@ export default function Header({ user, onOpenLogin, onOpenLogAttempt }) {
       .join('') || 'U'
 
   return (
-    <header className="h-16 px-6 bg-white border-b border-[#E8E2D8] flex items-center justify-between shrink-0 shadow-2xs">
+    <header className="h-16 px-6 bg-white border-b border-[#E8E2D8] flex items-center justify-between shrink-0 shadow-2xs select-none">
       {/* Left: Branding & Subtitle */}
       <div className="flex items-center gap-3">
         <div className="flex flex-col">
@@ -65,7 +36,7 @@ export default function Header({ user, onOpenLogin, onOpenLogAttempt }) {
         </div>
       </div>
 
-      {/* Right: Backend Connection Status, Log Attempt & User Profile Switcher */}
+      {/* Right: Controls (Log Attempt, Backend Health, User Profile) */}
       <div className="flex items-center gap-3">
         {onOpenLogAttempt && (
           <Button
@@ -78,22 +49,24 @@ export default function Header({ user, onOpenLogin, onOpenLogAttempt }) {
           </Button>
         )}
 
-        {/* Backend Connectivity Status */}
+        {/* Backend Connection Indicator */}
         <div
           title={
-            healthDetails?.falkordb?.graph
-              ? `FalkorDB: ${healthDetails.falkordb.graph} | LLM: ${healthDetails?.llm?.configured ? 'Active' : 'Fallback'}`
+            health.falkordb?.graph
+              ? `FalkorDB: ${health.falkordb.graph} | LLM: ${health?.llm?.configured ? 'Active' : 'Fallback'}`
               : 'Backend connection state'
           }
         >
           <StatusIndicator
-            status={healthStatus}
+            status={health.status}
             label={
-              healthStatus === 'ok'
-                ? 'Backend Connected'
-                : healthStatus === 'loading'
+              health.status === 'ok'
+                ? health.falkordb?.connected
+                  ? 'FalkorDB Connected'
+                  : 'Backend Connected'
+                : health.status === 'checking'
                   ? 'Checking Server...'
-                  : 'Offline / Degraded Mode'
+                  : 'Offline / Mock Mode'
             }
           />
         </div>
@@ -107,11 +80,11 @@ export default function Header({ user, onOpenLogin, onOpenLogAttempt }) {
           className="group flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-[#FAF7F2] border border-[#E8E2D8] hover:border-[#57B2A0] hover:bg-white transition-all duration-150 cursor-pointer shadow-2xs focus:outline-none focus:ring-2 focus:ring-[#98D8B0]"
           aria-label="Switch active user"
         >
-          <div className="w-7 h-7 rounded-full bg-[#57B2A0] text-white text-xs font-semibold flex items-center justify-center shrink-0">
+          <div className="w-6 h-6 rounded-full bg-[#57B2A0] text-white text-xs font-semibold flex items-center justify-center shrink-0">
             {initials}
           </div>
           <div className="flex flex-col text-left">
-            <span className="text-xs font-semibold text-[#1C1C1C] group-hover:text-[#57B2A0] transition-colors leading-tight">
+            <span className="text-xs font-semibold text-[#1C1C1C] group-hover:text-[#57B2A0] transition-colors leading-tight max-w-[120px] truncate">
               {user}
             </span>
             <span className="text-[10px] text-[#8C7E72] leading-tight">

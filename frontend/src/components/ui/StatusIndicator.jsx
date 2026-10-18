@@ -1,10 +1,18 @@
 export default function StatusIndicator({
   status = 'ok',
-  label,
+  label = null,
   className = '',
 }) {
-  const isOk = status === 'ok'
+  const isOk = status === 'ok' || status === 'connected'
   const isLoading = status === 'loading'
+
+  const displayLabel =
+    label ||
+    (isOk
+      ? 'Backend Connected'
+      : isLoading
+        ? 'Checking Server...'
+        : 'Offline / Degraded Mode')
 
   return (
     <div
@@ -30,14 +38,7 @@ export default function StatusIndicator({
           }`}
         />
       </span>
-      <span>
-        {label ||
-          (isOk
-            ? 'Backend Connected'
-            : isLoading
-              ? 'Connecting...'
-              : 'Offline / Degraded Mode')}
-      </span>
+      <span>{displayLabel}</span>
     </div>
   )
 }
