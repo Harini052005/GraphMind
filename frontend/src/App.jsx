@@ -3,6 +3,8 @@ import Sidebar from './components/layout/Sidebar'
 import Header from './components/layout/Header'
 import LoginView from './views/LoginView'
 import GraphView from './views/GraphView'
+import LogAttemptModal from './components/attempts/LogAttemptModal'
+import AttemptHistoryList from './components/attempts/AttemptHistoryList'
 import Card from './components/ui/Card'
 import Badge from './components/ui/Badge'
 
@@ -12,6 +14,8 @@ export default function App() {
     () => localStorage.getItem('recallgraph_user_id') || 'demo-user'
   )
   const [showLogin, setShowLogin] = useState(false)
+  const [showLogModal, setShowLogModal] = useState(false)
+  const [attemptsRefreshTrigger, setAttemptsRefreshTrigger] = useState(0)
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#F5F0E8] text-[#1C1C1C]">
@@ -21,45 +25,54 @@ export default function App() {
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 h-full overflow-hidden">
         {/* Top Header (Built by Member B) */}
-        <Header user={user} onOpenLogin={() => setShowLogin(true)} />
+        <Header
+          user={user}
+          onOpenLogin={() => setShowLogin(true)}
+          onOpenLogAttempt={() => setShowLogModal(true)}
+        />
 
         {/* Tab View Container */}
         <main className="flex-1 overflow-auto p-6">
-          {activeTab === 'graph' && <GraphView />}
+          {activeTab === 'graph' && (
+            <div className="space-y-6">
+              <GraphView />
+              <div className="pt-2">
+                <AttemptHistoryList
+                  onOpenLogModal={() => setShowLogModal(true)}
+                  refreshTrigger={attemptsRefreshTrigger}
+                />
+              </div>
+            </div>
+          )}
 
           {activeTab === 'pulse' && (
-            <div className="h-full flex flex-col gap-6">
+            <div className="space-y-6">
               <Card className="p-6">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-bold text-[#1C1C1C]">
-                      Pattern Pulse Analytics
-                    </h2>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-xl font-bold text-[#1C1C1C]">
+                        Pattern Pulse Analytics
+                      </h2>
+                      <Badge variant="mint" size="xs">
+                        Practice Feed Live
+                      </Badge>
+                    </div>
                     <p className="text-sm text-[#5C4033] mt-1">
-                      Deterministic weak pattern scoring, mistake clustering, and recency decay.
+                      Problem attempts, mistake clusters, and mastery progression.
                     </p>
                   </div>
                   <Badge variant="terracotta" size="sm">
-                    Coming in Step 4
+                    Phase 4 Scorer Coming Next
                   </Badge>
                 </div>
               </Card>
 
-              <div className="flex-1 bg-[#FAF7F2] border border-[#E8E2D8] rounded-2xl flex items-center justify-center p-8 text-center">
-                <div className="max-w-md space-y-3">
-                  <div className="w-12 h-12 rounded-2xl bg-[#D97757]/15 text-[#D97757] flex items-center justify-center mx-auto">
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
-                  <h3 className="text-base font-bold text-[#1C1C1C]">
-                    Pattern Pulse Engine
-                  </h3>
-                  <p className="text-xs text-[#8C7E72] leading-relaxed">
-                    This view will compute mistake clusters (e.g. repeated off-by-one errors and base case omissions) and weak pattern thresholds as defined in Phase 4.
-                  </p>
-                </div>
-              </div>
+              {/* Live Practice History */}
+              <AttemptHistoryList
+                onOpenLogModal={() => setShowLogModal(true)}
+                refreshTrigger={attemptsRefreshTrigger}
+              />
             </div>
           )}
 
@@ -112,6 +125,13 @@ export default function App() {
           onClose={() => setShowLogin(false)}
         />
       )}
+
+      {/* Log Practice Attempt Modal (Built by Member B) */}
+      <LogAttemptModal
+        isOpen={showLogModal}
+        onClose={() => setShowLogModal(false)}
+        onSuccess={() => setAttemptsRefreshTrigger((prev) => prev + 1)}
+      />
     </div>
   )
 }

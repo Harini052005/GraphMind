@@ -16,6 +16,7 @@ dist
 dist-ssr
 *.local
 .vite
+vite.config.*.timestamp*
 
 # Environment variables & secrets (NEVER COMMIT)
 .env
@@ -39,3 +40,5 @@ ehthumbs.db
 # Test coverage & caches
 coverage
 .cache
+.eslintcache
+*.tsbuildinfo

@@ -49,6 +49,8 @@ coverage/
 .cache/
 .vite/
 *.tsbuildinfo
+.eslintcache
+vite.config.*.timestamp*
 
 # Editor & OS files
 [Dd]esktop.ini

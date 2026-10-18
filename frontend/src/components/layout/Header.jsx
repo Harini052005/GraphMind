@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { checkBackendHealth } from '../../services/api/client'
 import StatusIndicator from '../ui/StatusIndicator'
+import Button from '../ui/Button'
 
-export default function Header({ user, onOpenLogin }) {
+export default function Header({ user, onOpenLogin, onOpenLogAttempt }) {
   const [healthStatus, setHealthStatus] = useState('loading')
   const [healthDetails, setHealthDetails] = useState(null)
 
@@ -64,8 +65,19 @@ export default function Header({ user, onOpenLogin }) {
         </div>
       </div>
 
-      {/* Right: Backend Connection Status & User Profile Switcher */}
-      <div className="flex items-center gap-3.5">
+      {/* Right: Backend Connection Status, Log Attempt & User Profile Switcher */}
+      <div className="flex items-center gap-3">
+        {onOpenLogAttempt && (
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={onOpenLogAttempt}
+            className="shadow-2xs font-semibold"
+          >
+            <span className="text-base leading-none mr-0.5">+</span> Log Attempt
+          </Button>
+        )}
+
         {/* Backend Connectivity Status */}
         <div
           title={
