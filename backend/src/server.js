@@ -5,6 +5,7 @@ import { checkFalkorHealth, closeFalkorConnection } from './graph/client.js'
 import { initializeSchema, seedSemanticPatterns } from './graph/schema.js'
 import patternsRouter from './routes/patterns.routes.js'
 import attemptsRouter from './routes/attempts.routes.js'
+import analyticsRouter from './routes/analytics.routes.js'
 
 const app = express()
 
@@ -36,6 +37,7 @@ app.get('/api/health', async (req, res) => {
 // Mount Routes
 app.use('/api/patterns', patternsRouter)
 app.use('/api/attempts', attemptsRouter)
+app.use('/api/analytics', analyticsRouter)
 
 // Global Error Handler
 app.use((err, req, res, next) => {
