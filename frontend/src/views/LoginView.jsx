@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { setActiveUserId } from '../services/api/client'
+import { SEEDED_DEMO_ATTEMPTS } from '../services/api/attemptsApi'
 import Modal from '../components/ui/Modal'
 import Input from '../components/ui/Input'
 import Button from '../components/ui/Button'
 import Badge from '../components/ui/Badge'
 
 const PRESET_USERS = [
-  { id: 'demo-user', role: 'Default Test Account' },
+  { id: 'demo-user', role: 'Default Test Account (13 Seeded Attempts)' },
   { id: 'harini-dev', role: 'Frontend Engineer' },
   { id: 'mouni-dev', role: 'Frontend Engineer' },
   { id: 'ranjitha-dev', role: 'Backend Engineer' },
@@ -21,6 +22,7 @@ export default function LoginView({
 }) {
   const [customUserId, setCustomUserId] = useState(currentUser || 'demo-user')
   const [error, setError] = useState('')
+  const [demoNotice, setDemoNotice] = useState('')
 
   function handleSave(selectedId) {
     const trimmed = (selectedId || customUserId).trim()
@@ -38,6 +40,20 @@ export default function LoginView({
     handleSave(customUserId)
   }
 
+  function handleLoadDemoDataset() {
+    try {
+      localStorage.setItem('recallgraph_local_attempts', JSON.stringify(SEEDED_DEMO_ATTEMPTS))
+      setCustomUserId('demo-user')
+      setActiveUserId('demo-user')
+      setDemoNotice('Demo dataset (13 attempts, Two Pointers weak pattern) loaded!')
+      setTimeout(() => {
+        onSelectUser('demo-user')
+      }, 500)
+    } catch (err) {
+      setError('Failed to seed demo data: ' + err.message)
+    }
+  }
+
   return (
     <Modal
       isOpen={true}
@@ -46,7 +62,14 @@ export default function LoginView({
       subtitle="Isolated user tenant for attempts, graph mastery & revisions"
       maxWidth="max-w-md"
     >
-      <form onSubmit={handleFormSubmit} className="space-y-5">
+      <form onSubmit={handleFormSubmit} className="space-y-4">
+        {demoNotice && (
+          <div className="p-3 bg-[#98D8B0]/25 border border-[#98D8B0]/60 rounded-xl text-xs text-[#164332] font-semibold flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-[#57B2A0]" />
+            <span>{demoNotice}</span>
+          </div>
+        )}
+
         {/* Current Active User Info */}
         <div className="p-3 bg-[#FAF7F2] rounded-xl border border-[#E8E2D8] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -82,9 +105,19 @@ export default function LoginView({
 
         {/* Quick-Select Presets */}
         <div className="space-y-2">
-          <label className="block text-xs font-semibold text-[#5C4033] uppercase tracking-wider">
-            Quick Select Profiles
-          </label>
+          <div className="flex items-center justify-between">
+            <label className="block text-xs font-semibold text-[#5C4033] uppercase tracking-wider">
+              Quick Select Profiles
+            </label>
+            <button
+              type="button"
+              onClick={handleLoadDemoDataset}
+              className="text-[11px] font-semibold text-[#57B2A0] hover:text-[#1C5248] transition-colors cursor-pointer"
+            >
+              🌱 Reset Demo Seed
+            </button>
+          </div>
+
           <div className="grid grid-cols-2 gap-2">
             {PRESET_USERS.map((preset) => {
               const isSelected =
