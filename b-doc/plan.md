@@ -38,13 +38,14 @@ backend/
 - `GET /api/health` endpoint responding with FalkorDB status and LLM fallback state.
 - Centralized configuration in `backend/src/config/index.js`.
 
-### Phase 2: FalkorDB Cloud Schema & Semantic Pattern Seeding (NEXT ⏳)
-- Schema indexes and uniqueness constraints (`:User(id)`, `:Problem(id)`, `:Pattern(name)`, `:Mistake(category)`).
-- Semantic DSA Knowledge Graph seeding (8 patterns + prerequisite dependency edges: e.g. `Recursion` $\rightarrow$ `Tree Traversal` $\rightarrow$ `DP`).
-- Offline mock adapter for developer resilience if FalkorDB Cloud is unreachable.
-- **Handoff**: Generate `f-doc/step-02-graph-patterns.md` for Member A.
+### Phase 2: FalkorDB Cloud Schema & Semantic Pattern Seeding (COMPLETED ✅)
+- Schema indexes and uniqueness constraints (`:User(id)`, `:Problem(id)`, `:Pattern(id)`, `:Pattern(name)`, `:Mistake(category)`).
+- Semantic DSA Knowledge Graph seeding (8 patterns + 6 prerequisite dependency edges: `Recursion` $\rightarrow$ `Tree Traversal` $\rightarrow$ `DP`).
+- Offline in-memory fallback adapter (`backend/src/graph/store.js`) ensuring seamless operation with or without live cloud database.
+- `GET /api/patterns` endpoint verified and tested with Vitest.
+- **Handoff**: Created `f-doc/step-02-graph-patterns.md` for Member A.
 
-### Phase 3: Attempt Recording & Cypher Persistence
+### Phase 3: Attempt Recording & Cypher Persistence (NEXT ⏳)
 - Parameterized Cypher query to atomically record problem attempts:
   - Create/merge `(:User)`, `(:Problem)`, `(:Pattern)`, `(:Mistake)`.
   - Link `(User)-[:MADE_ATTEMPT]->(Attempt)-[:FOR_PROBLEM]->(Problem)`.

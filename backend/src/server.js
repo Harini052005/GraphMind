@@ -2,6 +2,8 @@ import express from 'express'
 import cors from 'cors'
 import { config } from './config/index.js'
 import { checkFalkorHealth, closeFalkorConnection } from './graph/client.js'
+import { initializeSchema, seedSemanticPatterns } from './graph/schema.js'
+import patternsRouter from './routes/patterns.routes.js'
 
 const app = express()
 
@@ -30,6 +32,9 @@ app.get('/api/health', async (req, res) => {
   })
 })
 
+// Mount Routes
+app.use('/api/patterns', patternsRouter)
+
 // Global Error Handler
 app.use((err, req, res, next) => {
   console.error('[Unhandled Error]', err)
@@ -42,9 +47,17 @@ app.use((err, req, res, next) => {
 })
 
 // Graceful Shutdown
-const server = app.listen(config.port, () => {
+const server = app.listen(config.port, async () => {
   console.log(`[RecallGraph Backend] Running on http://localhost:${config.port}`)
   console.log(`[RecallGraph Backend] Environment: ${config.nodeEnv}`)
+
+  // Initialize graph schema and seed patterns asynchronously
+  try {
+    await initializeSchema()
+    await seedSemanticPatterns()
+  } catch (err) {
+    console.warn('[Bootstrap] Note during graph bootstrap:', err.message)
+  }
 })
 
 async function gracefulShutdown(signal) {
