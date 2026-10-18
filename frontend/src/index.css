@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+:root {
+  --bg-app: #F5F0E8;        /* Warm Beige / Cream background */
+  --bg-card: #FFFFFF;       /* Clean White card surfaces */
+  --bg-card-subtle: #FAF7F2;/* Soft cream node background */
+  --border-subtle: #E8E2D8; /* Warm light border */
+  --text-primary: #1C1C1C;  /* Ink black */
+  --text-secondary: #5C4033;/* Dark Walnut brown */
+  --text-muted: #8C7E72;    /* Muted label brown */
+  --color-mint: #98D8B0;    /* Mint green (Primary button & highlights) */
+  --color-sage: #57B2A0;    /* Soft sage green (Secondary accents) */
+  --color-terracotta: #D97757; /* Amber / Terracotta (Critical badge) */
+}
+
+body {
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
